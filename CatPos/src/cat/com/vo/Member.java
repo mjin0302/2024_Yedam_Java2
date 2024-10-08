@@ -12,7 +12,7 @@ public class Member {
 	private String productId;	// 상품 코드
 
 	// constructor
-	Member() { }
+	public Member() { }
 
 	// method
 	public String getId() {
