@@ -1,6 +1,10 @@
 package cat.com;
 
-public class ConsoleShow {
+import java.util.Scanner;
+
+import cat.com.vo.Member;
+
+public class ConsoleShow{
 	
 	public void consoleShow() {
 		System.out.println(
@@ -21,6 +25,14 @@ public class ConsoleShow {
 				+ "      '---\"       `----'             `----'                           `----'   \r\n"
 				+ "                                                                               "
 					);
+	}
+	
+	public void loginMenu() {
+		System.out.println("--------------------------------------------------------------------------------");
+		System.out.println("                       1. 로그인  |  2. 회원가입  |  3. 종료");
+		System.out.println("--------------------------------------------------------------------------------");
+
+		System.out.print("메뉴선택 > ");
 	}
 	
 	public void firstMenuShow() {

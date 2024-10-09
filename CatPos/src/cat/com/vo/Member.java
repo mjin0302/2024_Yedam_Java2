@@ -9,7 +9,10 @@ public class Member {
 	private String phone;		// 전화번호
 	private Date hireDate;		// 입사일
 	private String role;		// 권한
-	private String productId;	// 상품 코드
+	private String productId;	// 상품 코드t
+	private String name;
+
+	
 
 	// constructor
 	public Member() { }
@@ -62,11 +65,19 @@ public class Member {
 	public void setProductId(String productId) {
 		this.productId = productId;
 	}
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	@Override
 	public String toString() {
 		return "Member [id=" + id + ", pass=" + pass + ", phone=" + phone + ", hireDate=" + hireDate + ", role=" + role
-				+ ", productId=" + productId + ", toString()=" + super.toString() + "]";
+				+ ", productId=" + productId + ", name=" + name + "]";
 	}
 	
 }

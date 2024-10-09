@@ -22,14 +22,17 @@ public class DAO {
 		// jdbc driver 가져오기 => 정상
 		try {
 			Class.forName("oracle.jdbc.OracleDriver");
+			
 			conn = DriverManager.getConnection(url, user, pass);
+			
+//			System.out.println("연결성공");
 		} catch (ClassNotFoundException | SQLException e) {
-			System.out.println("에러발생");
+			
 			e.printStackTrace();
 		}
 	}
 	
-	public void disconn() {
+	public void disconnect() {
 		// 사용한 리소스 환원.
 		try {
 			if(conn != null) { // 할당되었을때
