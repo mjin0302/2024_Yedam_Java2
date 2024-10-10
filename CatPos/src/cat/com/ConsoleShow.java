@@ -46,28 +46,4 @@ public class ConsoleShow{
 		
 	} // End of firstMenuShow()
 	
-	public Cart cartPrint() {
-		System.out.println("조회된 상품 중 장바구니에 담을 상품이 있습니까 ? y/n");
-		String yesORno = sc.nextLine();
-		
-		Cart cart = new Cart();
-		
-		if(yesORno.equalsIgnoreCase("y")) {
-			System.out.println("장바구니에 담을 상품 코드를 입력하세요");
-			String productId = sc.nextLine();
-			cart.setProductId(productId);
-			
-			System.out.println("수량을 입력하세요");
-			int quantity = Integer.parseInt(sc.nextLine());
-			cart.setQuantity(quantity);
-			
-			return cart;
-		} else if(yesORno.equalsIgnoreCase("n")) {
-			return cart;
-		} else {
-			System.out.println("잘못된 입력값입니다. 다시 입력하세요");
-			return null;
-		}
-	}
-	
 } // End Class
