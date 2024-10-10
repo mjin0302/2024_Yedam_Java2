@@ -11,7 +11,7 @@ public class Product {
 	private String state;		// 상품 상태
 
 	// constructor
-	Product() {}
+	public Product() {}
 	
 	// method
 	public String getProductId() {

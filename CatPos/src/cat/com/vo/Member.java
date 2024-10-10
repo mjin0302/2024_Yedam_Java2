@@ -17,6 +17,13 @@ public class Member {
 	// constructor
 	public Member() { }
 
+	public Member(String id, String pw, String name, String phone) {
+		this.id = id;
+		this.pass = pw;
+		this.name = name;
+		this.phone = phone;
+	}
+
 	// method
 	public String getId() {
 		return id;

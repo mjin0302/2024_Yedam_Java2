@@ -1,4 +1,4 @@
-package cat.com;
+package cat.com.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -10,13 +10,14 @@ public class DAO {
 	
 	public Connection conn;
 	public PreparedStatement pstmt = null;
-	public ResultSet rs = null; 
+	public ResultSet rs = null;
+	
+	String sql = null;
+	int rows = 0;
 
 	String url = "jdbc:oracle:thin:@localhost:1521:xe";
 	String user = "catpos";
 	String pass = "catpos";
-	
-	public String sql;
 
 	public void connect() {
 		// jdbc driver 가져오기 => 정상

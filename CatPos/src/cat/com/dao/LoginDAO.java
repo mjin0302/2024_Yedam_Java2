@@ -1,7 +1,5 @@
-package cat.com;
+package cat.com.dao;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
@@ -9,11 +7,7 @@ import cat.com.vo.Member;
 
 public class LoginDAO extends DAO {
 	
-	String sql = null;
-	PreparedStatement pstmt = null;
-	ResultSet rs = null;
-	
-	Member loginChk(String id, String pw) {
+	public Member loginChk(String id, String pw) {
 		connect();
 		
 		sql = "SELECT   id, "
@@ -68,5 +62,37 @@ public class LoginDAO extends DAO {
 		return null;
 		
 	} // End of loginChk()
+	
+	// 회원가입
+	public int signIn(Member mem) {
+		connect();
+		sql = "INSERT INTO member ( id, "
+			+ 					   "pass, "
+			+ 					   "phone, "
+			+ 					   "name )  "
+			+ "VALUES             ( ?, "
+			+ "                     ?, "
+			+ "                     ?, "
+			+ "                     ? )";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, mem.getId());
+			pstmt.setString(2, mem.getPass());
+			pstmt.setString(3, mem.getPhone());
+			pstmt.setString(4, mem.getName());
+			
+			return rows = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		disconnect();
+		return 0;
+		
+	} // End of signIn
 
 }

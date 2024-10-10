@@ -3,14 +3,23 @@ package cat.com.vo;
 public class Cart {
 
 	// field
+	private String cartCode; 	// 코드
 	private String id;			// 회원 ID
 	private String productId;	// 상품코드
 	private int quantity;		// 상품 수량
 
 	// constructor
-	Cart() {};
+	public Cart() {};
 
 	// method
+	public String getCartCode() {
+		return cartCode;
+	}
+
+	public void setCartCode(String cartCode) {
+		this.cartCode = cartCode;
+	}
+	
 	public String getId() {
 		return id;
 	}
