@@ -6,6 +6,8 @@ public class Cart {
 	private String cartCode; 	// 코드
 	private String id;			// 회원 ID
 	private String productId;	// 상품코드
+	private String productName; // 상품이름
+	private int price;		// 상품가격
 	private int quantity;		// 상품 수량
 
 	// constructor
@@ -42,6 +44,22 @@ public class Cart {
 
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+	
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+	
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
 	}
 
 	@Override

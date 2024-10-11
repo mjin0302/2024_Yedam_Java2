@@ -12,11 +12,13 @@ public class Member {
 	private String productId;	// 상품 코드t
 	private String name;
 
-	
-
 	// constructor
 	public Member() { }
 
+	public Member(String id, String name) {
+		this.id = id;
+		this.name = name;
+	}
 	public Member(String id, String pw, String name, String phone) {
 		this.id = id;
 		this.pass = pw;

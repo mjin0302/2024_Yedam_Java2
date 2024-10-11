@@ -7,15 +7,19 @@ public class MainMenuService extends ConsoleShow {
 	
 	public void mainMenu(Member mem) {
 		
-		boolean stop = true;
-		
+		stop = true;
 		while(stop) {
 			System.out.println("--------------------------------------------------------------------------------");
-			System.out.println("                    1. 상품구매 | 2. 관리자 | 3. 뒤로가기 | 4. 종료");
+			System.out.println("          1. 상품구매  |  2. 장바구니  |  3. 관리자  |  4. 뒤로가기  |  5. 종료");
 			System.out.println("--------------------------------------------------------------------------------");
 			
 			System.out.print("메뉴선택 > ");
-			int menu = Integer.parseInt(sc.nextLine());
+			try {
+	            menu = Integer.parseInt(sc.nextLine());
+	        } catch (NumberFormatException e) {
+	            System.out.println("잘못된 입력입니다. 숫자를 입력하세요.");
+	            continue;
+	        }
 			System.out.println();
 			
 			switch(menu) {
@@ -24,23 +28,29 @@ public class MainMenuService extends ConsoleShow {
 				ProductMenuService proService = new ProductMenuService();
 				proService.productMenu(mem.getId(), mem.getName());
 				
-				stop = false;
+				//stop = false;
+				break;
+			
+			case 2:
+				CartMenuService cService = new CartMenuService();
+				cService.cartMenu(mem);
 				break;
 				
-			case 2:
-				if(mem.getRole().equals("Admin")) {
-					System.out.println("관리자 모드 허용");
+			case 3:
+				AdminMenuService aService = new AdminMenuService();
+				if(mem.getRole().equalsIgnoreCase("admin") || mem.getRole().equalsIgnoreCase("staff")) {
 					
+					aService.adminMenu(mem);
 				} else {
 					System.out.println("접근 권한이 없습니다.");
 					continue;
 				}
 				break;
 				
-			case 3: return;
+			case 4: return;
 				
-			case 4 :
-				System.out.println("Program End");
+			case 5 :
+				programEnd();
 				stop = false;
 				break;
 				
@@ -52,7 +62,6 @@ public class MainMenuService extends ConsoleShow {
 			
 		} // End While
 		
-		sc.close();
 	} // End of mainMenu()
 	
 }// End of Class

@@ -11,16 +11,16 @@ public class ProductDAO extends DAO{
 	public List<Product> getAllProduct(String kind) {
 		List<Product> list = new ArrayList<>();
 		try {
-			sql = "SELECT   product_id, "
-			    +     	   "name,"
-			    + 		   "price, "
-			    +     	   "kind, "
-			    +     	   "stock, "
-			    +     	   "state "
-			    + "FROM     product "
-			    + "WHERE    kind = ? "
-			    + "AND		UPPER(state) = UPPER('show') "
-			    + "ORDER BY name ";
+			sql = "SELECT p.product_code, "
+				+ "		  p.name, "
+				+ "		  NVL(p.price, 0) as price, "
+				+ "		  p.kind, "
+				+ "		  p.state, "
+				+ "		  NVL((s.input - s.output), 0) as stock "
+				+ "FROM   product p LEFT OUTER JOIN stock_in_out s "
+				+ "ON     p.product_code = s.product_code "
+				+ "WHERE  p.kind = ? "
+				+ "AND	  UPPER(p.state) = UPPER('show') ";
 			
 			connect();
 			
@@ -31,7 +31,7 @@ public class ProductDAO extends DAO{
 			while(rs.next()) {
 				Product product = new Product();
 			
-				String productId = rs.getString("product_id");
+				String productId = rs.getString("product_code");
 				product.setProductId(productId);
 				
 				String name = rs.getString("name");
@@ -43,12 +43,10 @@ public class ProductDAO extends DAO{
 				String kind2 = rs.getString("kind");
 				product.setKind(kind2);
 				
-				int stock = rs.getInt("stock");
-				product.setStock(stock);
-				
 				String state = rs.getString("state");
 				product.setState(state);
 				
+				int stock = rs.getInt("stock");
 				
 				list.add(product);
 				

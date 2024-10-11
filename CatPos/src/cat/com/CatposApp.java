@@ -30,15 +30,20 @@ public class CatposApp {
 			System.out.println("--------------------------------------------------------------------------------");
 
 			System.out.print("메뉴선택 > ");
-			menu = Integer.parseInt(sc.nextLine());
-
+			try {
+	            menu = Integer.parseInt(sc.nextLine());
+	        } catch (NumberFormatException e) {
+	            System.out.println("잘못된 입력입니다. 숫자를 입력하세요.");
+	            continue;
+	        }
+			
 			switch (menu) {
 			case 1:
 				// 로그인
 				mem = service.login();
 				
 				if (mem != null) {
-					System.out.println(mem.getName() + "님 반갑습니다.");
+					System.out.println("😀 " + mem.getName() + "님 반갑습니다. 😀");
 					
 					MainMenuService main = new MainMenuService();
 					main.mainMenu(mem);
@@ -65,7 +70,7 @@ public class CatposApp {
 				break;
 				
 			case 3 :
-				System.out.println("Program End");
+				show.programEnd();
 				stop = false;
 				
 				break;

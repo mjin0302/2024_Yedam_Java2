@@ -7,8 +7,10 @@ public class Product {
 	private String name;		// 상품이름
 	private int price;			// 상품가격
 	private String kind;		// 상품 카테고리
-	private int stock;			// 상품 수량
 	private String state;		// 상품 상태
+
+	private int stock;			// 재고수량
+	
 
 	// constructor
 	public Product() {}
@@ -46,6 +48,14 @@ public class Product {
 		this.kind = kind;
 	}
 
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+	
 	public int getStock() {
 		return stock;
 	}
@@ -54,20 +64,11 @@ public class Product {
 		this.stock = stock;
 	}
 
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
-
 	@Override
 	public String toString() {
-		return "Product [productId=" + productId + ", name=" + name + ", price=" + price + ", kind=" + kind + ", stock="
-				+ stock + ", state=" + state + ", toString()=" + super.toString() + "]";
+		return "Product [productId=" + productId + ", name=" + name + ", price=" + price + ", kind=" + kind + ", state="
+				+ state + ", stock=" + stock + ", toString()=" + super.toString() + "]";
 	}
-	
 	
 
 }

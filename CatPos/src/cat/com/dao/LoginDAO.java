@@ -15,7 +15,7 @@ public class LoginDAO extends DAO {
 		    +    	   "phone, "
 		    +    	   "hire_date, "
 		    +     	   "role, "
-		    +     	   "product_id, "
+		    +     	   "product_code, "
 		    +      	   "name "
 		    + "FROM     member "
 		    + "WHERE    UPPER(id) = UPPER( ? ) "
