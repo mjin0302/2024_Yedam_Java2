@@ -3,7 +3,6 @@ package chap06;
 public class CalcMain {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		Calculator myCalcu = new Calculator();
 		
 		// 정사각형의 넓이 구하기

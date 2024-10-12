@@ -86,7 +86,6 @@ public class LoginDAO extends DAO {
 			return rows = pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

@@ -11,7 +11,6 @@ public class Book {
 	
 	// constructor
 	public Book() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	public Book(String title) {

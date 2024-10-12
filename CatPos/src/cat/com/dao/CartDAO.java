@@ -41,19 +41,20 @@ public class CartDAO extends DAO {
 			
 			e.printStackTrace();
 		}
-	
+		
+		disconnect();
 		return 0;
 	} // End of insertCart()
 	
 	public List<Cart> selectAllList(Member mem) {
 		
-		sql = "SELECT     c.cart_code, "
-		    +		     "c.quantity, "
-		    +		     "c.product_code,"
-		    +		     "c.id, "
-		    +		     "p.name, "
-		    +			 "p.price "
-		    + "FROM       cart c "
+		sql = "SELECT     c.cart_code, "	// 장바구니 코드
+		    +		     "c.quantity, "		// 상품 수량
+		    +		     "c.product_code,"	// 상품 코드
+		    +		     "c.id, "			// 회원 id
+		    +		     "p.name, "			// 상품이름
+		    +			 "p.price "			// 상품 가격
+		    + "FROM       cart c "			
 		    + "INNER JOIN product p "
 		    + "ON         c.product_code = p.product_code ";
 		
@@ -88,7 +89,6 @@ public class CartDAO extends DAO {
 			
 				list.add(cart);
 			}
-			rows = pstmt.executeUpdate(); 
 			
 			return list;
 			
@@ -96,14 +96,18 @@ public class CartDAO extends DAO {
 			
 			e.printStackTrace();
 		}
-	
+		
+		disconnect();
 		return null;
 	} // End of selectAllList()
 	
 	public int delectCart(Member mem, String code) {
+		
 		sql = "DELETE FROM cart "
 			+ "WHERE  product_code = ? "
 			+ "AND    id = ? ";
+		
+		connect();
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -115,10 +119,10 @@ public class CartDAO extends DAO {
 			 
 			return rows;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
+		disconnect();
 		return 0;
 	}
 

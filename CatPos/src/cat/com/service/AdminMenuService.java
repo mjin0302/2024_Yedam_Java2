@@ -9,6 +9,9 @@ public class AdminMenuService extends ConsoleShow {
 	public void adminMenu(Member mem) {
 		
 		stop = true;
+		menu = 0;
+		rows = 0;
+		
 		while(stop) {
 			System.out.println("😀" + mem.getName() + "관리자님 메뉴를 선택하세요. 😀");
 			System.out.println("--------------------------------------------------------------------------------");

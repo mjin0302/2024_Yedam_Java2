@@ -15,7 +15,8 @@ public class DAO {
 	String sql = null;
 	int rows = 0;
 
-	String url = "jdbc:oracle:thin:@localhost:1521:xe";
+	String url = "jdbc:oracle:thin:@43.202.63.165:1521:xe";
+//	String url = "jdbc:oracle:thin:@localhost:1521:xe";
 	String user = "catpos";
 	String pass = "catpos";
 
@@ -33,7 +34,23 @@ public class DAO {
 		}
 	}
 	
+	protected Connection conn() {
+		try {
+			Class.forName("oracle.jdbc.OracleDriver");
+			
+			conn = DriverManager.getConnection(url, user, pass);
+			
+			return conn;
+			
+		} catch (ClassNotFoundException | SQLException e) {
+			
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	public void disconnect() {
+		
 		// 사용한 리소스 환원.
 		try {
 			if(conn != null) { // 할당되었을때

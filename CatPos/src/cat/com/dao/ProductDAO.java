@@ -28,6 +28,7 @@ public class ProductDAO extends DAO{
 			pstmt.setString(1, kind);
 			
 			rs = pstmt.executeQuery();
+			
 			while(rs.next()) {
 				Product product = new Product();
 			
@@ -47,13 +48,14 @@ public class ProductDAO extends DAO{
 				product.setState(state);
 				
 				int stock = rs.getInt("stock");
+				product.setStock(stock);
 				
 				list.add(product);
 				
 			}
+			
 			return list;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

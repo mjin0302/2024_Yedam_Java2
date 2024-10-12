@@ -7,8 +7,8 @@ public class Cart {
 	private String id;			// 회원 ID
 	private String productId;	// 상품코드
 	private String productName; // 상품이름
-	private int price;		// 상품가격
-	private int quantity;		// 상품 수량
+	private int price;			// 상품가격
+	private int quantity;		// 상품수량
 
 	// constructor
 	public Cart() {};

@@ -1,14 +1,12 @@
 package cat.com.service;
 
-import java.util.Scanner;
 import java.util.regex.Pattern;
 
+import cat.com.ConsoleShow;
 import cat.com.dao.LoginDAO;
 import cat.com.vo.Member;
 
-public class LoginService {
-	
-	static Scanner sc = new Scanner(System.in);
+public class LoginService extends ConsoleShow {
 	
 	// field
 	String id;
@@ -35,11 +33,11 @@ public class LoginService {
             return false;
         }
         return pattern.matcher(pass).matches();
-        
     }
 	
     // 로그인
 	public Member login() {
+		// TODO 아이디 중복체크하기
 		System.out.print("아이디 입력 > ");
 		id = sc.nextLine();
 		

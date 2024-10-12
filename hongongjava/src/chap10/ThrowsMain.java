@@ -15,7 +15,6 @@ public class ThrowsMain {
 
 	// ClassNotFoundException -> 이 메소드를 호출하는 애 한테 예외가 떠넘겨짐
 	private static void findClass() throws ClassNotFoundException {
-		// TODO Auto-generated method stub
 		Class clazz = Class.forName("java.lang.String2");
 	}
 }

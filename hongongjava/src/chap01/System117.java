@@ -16,7 +16,6 @@ public class System117 {
 					break;
 				}
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				System.out.println("입력 오류 발생");
 			}
 			

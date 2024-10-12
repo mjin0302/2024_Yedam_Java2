@@ -8,9 +8,12 @@ public class MainMenuService extends ConsoleShow {
 	public void mainMenu(Member mem) {
 		
 		stop = true;
+		menu = 0;
+		rows = 0;
+		
 		while(stop) {
 			System.out.println("--------------------------------------------------------------------------------");
-			System.out.println("          1. 상품구매  |  2. 장바구니  |  3. 관리자  |  4. 뒤로가기  |  5. 종료");
+			System.out.println("   1. 상품목록  |  2. 장바구니  |  3. 주문목록  |  3. 관리자  |  4. 뒤로가기  |  5. 종료");
 			System.out.println("--------------------------------------------------------------------------------");
 			
 			System.out.print("메뉴선택 > ");
@@ -25,31 +28,33 @@ public class MainMenuService extends ConsoleShow {
 			switch(menu) {
 			
 			case 1:
-				ProductMenuService proService = new ProductMenuService();
 				proService.productMenu(mem.getId(), mem.getName());
 				
 				//stop = false;
 				break;
 			
 			case 2:
-				CartMenuService cService = new CartMenuService();
-				cService.cartMenu(mem);
+				cartService.cartMenu(mem);
 				break;
 				
 			case 3:
-				AdminMenuService aService = new AdminMenuService();
 				if(mem.getRole().equalsIgnoreCase("admin") || mem.getRole().equalsIgnoreCase("staff")) {
 					
-					aService.adminMenu(mem);
+					adminService.adminMenu(mem);
 				} else {
 					System.out.println("접근 권한이 없습니다.");
 					continue;
 				}
 				break;
+			
+			case 4:
 				
-			case 4: return;
+				break;
 				
-			case 5 :
+				
+			case 5: return;
+				
+			case 6 :
 				programEnd();
 				stop = false;
 				break;
