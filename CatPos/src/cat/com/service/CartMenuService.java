@@ -12,10 +12,6 @@ public class CartMenuService extends ConsoleShow {
 	
 	public void cartMenu(Member mem) {
 		
-		stop = true;
-		menu = 0;
-		rows = 0;
-		
 		cList = cartDAO.selectAllList(mem);
 		
 		while(stop) {
@@ -28,7 +24,7 @@ public class CartMenuService extends ConsoleShow {
 			try {
 	            menu = Integer.parseInt(sc.nextLine());
 	        } catch (NumberFormatException e) {
-	            System.out.println("잘못된 입력입니다. 숫자를 입력하세요.");
+	            System.out.println("\n잘못된 입력입니다. 메뉴에 있는 번호를 입력하세요.");
 	            continue;
 	        }
 			System.out.println();
@@ -45,7 +41,7 @@ public class CartMenuService extends ConsoleShow {
 						String code = sc.nextLine();
 						rows = cartDAO.delectCart(mem, code);
 						if(rows > 0) {
-							System.out.println(rows + "건 삭제되었습니다.");
+							System.out.println("\n" + rows + "건 삭제되었습니다.");
 						}
 					} 
 					break;
@@ -61,9 +57,9 @@ public class CartMenuService extends ConsoleShow {
 			            		totalPrice += cart.getPrice() * cart.getQuantity();
 			            		codes.add(cart.getProductId());
 			            	}
-			            	System.out.println("총 금액 : " +  NumberFormat.getInstance().format(totalPrice));
+			            	System.out.println("\n총 금액 : " +  NumberFormat.getInstance().format(totalPrice));
 			            	
-				            System.out.print("장바구니 전체구매를 진행하시겠습니까? (Y / N) > ");
+				            System.out.print("\n장바구니 전체구매를 진행하시겠습니까? (Y / N) > ");
 				            answer = sc.nextLine();
 				            
 				            if (answer.equalsIgnoreCase("Y")) {	// 입력값이 y
@@ -71,13 +67,13 @@ public class CartMenuService extends ConsoleShow {
 				            	oDao.processOrder(mem.getId(), codes, cList, totalPrice);
 				            	
 				            	if(rows > 0) {
-									System.out.println(NumberFormat.getInstance().format(totalPrice) + "원 결제되었습니다. 감사합니다 ღ");
+									System.out.println("\n" + NumberFormat.getInstance().format(totalPrice) + "원 결제되었습니다. 감사합니다 ღ");
 								}
 				            	break;
 				            } else if (answer.equalsIgnoreCase("N")) {	// 입력값이 n
 				                continue; 
 				            } else {
-				                System.out.println("잘못된 입력값입니다. 다시 입력하세요.");
+				                System.out.println("\n잘못된 입력값입니다. 다시 입력하세요.");
 				            }
 				            
 				        } // End of While

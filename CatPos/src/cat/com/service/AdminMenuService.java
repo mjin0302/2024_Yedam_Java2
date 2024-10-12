@@ -8,10 +8,6 @@ public class AdminMenuService extends ConsoleShow {
 	// method
 	public void adminMenu(Member mem) {
 		
-		stop = true;
-		menu = 0;
-		rows = 0;
-		
 		while(stop) {
 			System.out.println("😀" + mem.getName() + "관리자님 메뉴를 선택하세요. 😀");
 			System.out.println("--------------------------------------------------------------------------------");
@@ -22,7 +18,7 @@ public class AdminMenuService extends ConsoleShow {
 			try {
 	            menu = Integer.parseInt(sc.nextLine());
 	        } catch (NumberFormatException e) {
-	            System.out.println("잘못된 입력입니다. 숫자를 입력하세요.");
+	            System.out.println("\n잘못된 입력입니다. 메뉴에 있는 번호를 입력하세요.");
 	            continue;
 	        }
 			System.out.println();
@@ -36,9 +32,7 @@ public class AdminMenuService extends ConsoleShow {
 					
 					break;
 					
-				case 3 :
-					
-					break;
+				case 3 : return;
 					
 				case 4 :
 					programEnd();

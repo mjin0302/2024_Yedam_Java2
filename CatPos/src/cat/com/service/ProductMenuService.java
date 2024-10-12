@@ -11,10 +11,6 @@ public class ProductMenuService extends ConsoleShow {
 	
 	public static Cart isAddToCart(List<String> code) {
 		
-		stop = true;
-		menu = 0;
-		rows = 0;
-		
 		while (true) { 
             System.out.print("장바구니에 추가하시겠습니까? (Y / N) > ");
             answer = sc.nextLine();
@@ -25,7 +21,7 @@ public class ProductMenuService extends ConsoleShow {
                     String productId = sc.nextLine();
 
                     if (!code.contains(productId)) {	// 입력한 상품 코드가 넘겨받은 코드 리스트에 포함되지 않는 경우
-                        System.out.println("잘못된 상품 코드입니다. 다시 입력하세요.");
+                        System.out.println("잘못된 상품 코드입니다. 다시 입력하세요.\n");
                         continue; 
                     }
 
@@ -40,7 +36,7 @@ public class ProductMenuService extends ConsoleShow {
             } else if (answer.equalsIgnoreCase("n")) {
                 return null; 
             } else {
-                System.out.println("잘못된 입력값입니다. 다시 입력하세요.");
+                System.out.println("잘못된 입력값입니다. 다시 입력하세요.\n");
             }
             
         } // End of While
@@ -65,7 +61,7 @@ public class ProductMenuService extends ConsoleShow {
 			try {
 	            menu = Integer.parseInt(sc.nextLine());
 	        } catch (NumberFormatException e) {
-	            System.out.println("잘못된 입력입니다. 숫자를 입력하세요.");
+	            System.out.println("\n잘못된 입력입니다. 메뉴에 있는 번호를 입력하세요.");
 	            continue;
 	        }
 			System.out.println();
@@ -73,7 +69,6 @@ public class ProductMenuService extends ConsoleShow {
 			switch(menu) {
 				case 1 :	// 상품 사료 카테고리 선택
 					list = dao.getAllProduct("사료");		//카테고리별 상품조회
-					System.out.println(list);
 					productMenuPrint(list);	// 상품 목록 뿌리기
 					
 					for(Product pro : list) {
@@ -83,10 +78,8 @@ public class ProductMenuService extends ConsoleShow {
 					
 					if(cart != null) {
 						rows = cartDAO.insertCart(id, cart);
-						System.out.println("id = " + id);
-						System.out.println("cart = " + cartDAO.insertCart(id, cart));
 						if(rows > 0) {
-							System.out.println(rows + "개 추가되었습니다.");
+							System.out.println("\n" + rows + "개 상품이 장바구니에 추가되었습니다.");
 						}
 						break;
 					}
@@ -94,18 +87,20 @@ public class ProductMenuService extends ConsoleShow {
 					
 				case 2 :	// 상품 간식 카테고리 선택
 					list = dao.getAllProduct("간식");		//카테고리별 상품조회
-					System.out.println(list);
 					productMenuPrint(list);	// 상품 목록 뿌리기
 					
 					for(Product pro : list) {
 						codes.add(pro.getProductId());
 					}
+					
+					// TODO 상품 코드 똑바로 넘어오는지 확인하기 
+					// 오류 : Cannot invoke "cat.com.vo.Cart.setProductId(String)" because "cat.com.service.ProductMenuService.cart" is null
 					cart = isAddToCart(codes);
 					
 					if(cart != null) {
 						rows = cartDAO.insertCart(id, cart);
 						if(rows > 0) {
-							System.out.println(rows + "개 추가되었습니다.");
+							System.out.println("\n" + rows + "개 상품이 장바구니에 추가되었습니다.");
 						}
 						break;
 					}
@@ -113,7 +108,6 @@ public class ProductMenuService extends ConsoleShow {
 					
 				case 3 :	// 상품 장난감 카테고리 선택
 					list = dao.getAllProduct("장난감");	//카테고리별 상품조회
-					System.out.println(list);
 					productMenuPrint(list); 	// 상품 목록 뿌리기
 					
 					for(Product pro : list) {
@@ -125,7 +119,7 @@ public class ProductMenuService extends ConsoleShow {
 					if(cart != null) {
 						rows = cartDAO.insertCart(id, cart);
 						if(rows > 0) {
-							System.out.println(rows + "개 추가되었습니다.");
+							System.out.println("\n" + rows + "개 상품이 장바구니에 추가되었습니다.");
 						}
 						break;
 					}
@@ -144,7 +138,7 @@ public class ProductMenuService extends ConsoleShow {
 					if(cart != null) {
 						rows = cartDAO.insertCart(id, cart);
 						if(rows > 0) {
-							System.out.println(rows + "개 추가되었습니다.");
+							System.out.println("\n" + rows + "개 상품이 장바구니에 추가되었습니다.");
 						}
 						break;
 					}
