@@ -12,7 +12,7 @@ import cat.com.vo.OrderSheet;
 
 public class OrderDAO extends DAO {
 	
-	// TODO 주문서 화면에 뿌려주기
+	// TODO 주문서 화면에 뿌려주기 그 전에 쿼리 먼저 확인하기...ㅠ
 	public List<OrderSheet> selectAllOrderSheet(String id) {
 		sql = "SELECT     od.product_code, "
 			+ "           od.quantity, "
