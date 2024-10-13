@@ -5,12 +5,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cat.com.ConsoleShow;
+import cat.com.dao.CartDAO;
+import cat.com.dao.OrderDAO;
 import cat.com.vo.Cart;
 import cat.com.vo.Member;
 
 public class CartMenuService extends ConsoleShow {
 	
 	public void cartMenu(Member mem) {
+		
+		List<Cart> cList = new ArrayList<>();
+		CartDAO cartDAO = new CartDAO();
+		OrderDAO oDao = new OrderDAO();
 		
 		cList = cartDAO.selectAllList(mem);
 		
@@ -32,6 +38,7 @@ public class CartMenuService extends ConsoleShow {
 			switch(menu) {
 				case 1 :
 					cartAllListPrint(cList);
+					
 					break;
 					
 				case 2 :

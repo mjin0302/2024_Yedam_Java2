@@ -34,7 +34,7 @@ public class DAO {
 		}
 	}
 	
-	protected Connection conn() {
+	protected Connection connected() {
 		try {
 			Class.forName("oracle.jdbc.OracleDriver");
 			

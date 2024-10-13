@@ -63,6 +63,32 @@ public class LoginDAO extends DAO {
 		
 	} // End of loginChk()
 	
+	public String idChk(String id) {
+		connect();
+		
+		sql = "SELECT id "
+			+ "FROM   member "
+			+ "WHERE  UPPER(id) = UPPER(?) ";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, id);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				return rs.getString("id");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+		
+	}
+	
 	// 회원가입
 	public int signIn(Member mem) {
 		connect();

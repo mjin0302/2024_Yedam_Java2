@@ -4,13 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cat.com.ConsoleShow;
+import cat.com.dao.CartDAO;
+import cat.com.dao.ProductDAO;
 import cat.com.vo.Cart;
 import cat.com.vo.Product;
 
 public class ProductMenuService extends ConsoleShow {
 	
 	public static Cart isAddToCart(List<String> code) {
-		
+		Cart cart = new Cart();
 		while (true) { 
             System.out.print("장바구니에 추가하시겠습니까? (Y / N) > ");
             answer = sc.nextLine();
@@ -45,12 +47,13 @@ public class ProductMenuService extends ConsoleShow {
 	
 	public void productMenu(String id, String name) {
 		
-		stop = true;
-		menu = 0;
-		rows = 0;
+		Cart cart = new Cart();
+		ProductDAO dao = new ProductDAO();
+		CartDAO cartDAO = new CartDAO();		// 장바구니
 		
 		while(stop) {
 			List<String> codes = new ArrayList<>();	//	상품 코드 저장
+			List<Product> list = new ArrayList<>();
 			
 			System.out.println("😀 " + name + "님 구매하실 상품의 카테고리를 선택하세요 😀");
 			System.out.println("--------------------------------------------------------------------------------");
@@ -68,20 +71,22 @@ public class ProductMenuService extends ConsoleShow {
 			
 			switch(menu) {
 				case 1 :	// 상품 사료 카테고리 선택
-					list = dao.getAllProduct("사료");		//카테고리별 상품조회
-					productMenuPrint(list);	// 상품 목록 뿌리기
+					list = dao.getAllProduct("사료");	//카테고리별 상품조회
+					productMenuPrint(list); 	// 상품 목록 뿌리기
 					
 					for(Product pro : list) {
 						codes.add(pro.getProductId());
 					}
 					cart = isAddToCart(codes);
 					
+					// isAddToCart()의 반환값이 null이 아닐 때
 					if(cart != null) {
 						rows = cartDAO.insertCart(id, cart);
 						if(rows > 0) {
 							System.out.println("\n" + rows + "개 상품이 장바구니에 추가되었습니다.");
+						} else {
+						    System.out.println("장바구니 추가 실패.");
 						}
-						break;
 					}
 					break;
 					
@@ -92,17 +97,16 @@ public class ProductMenuService extends ConsoleShow {
 					for(Product pro : list) {
 						codes.add(pro.getProductId());
 					}
-					
-					// TODO 상품 코드 똑바로 넘어오는지 확인하기 
-					// 오류 : Cannot invoke "cat.com.vo.Cart.setProductId(String)" because "cat.com.service.ProductMenuService.cart" is null
+
 					cart = isAddToCart(codes);
 					
 					if(cart != null) {
 						rows = cartDAO.insertCart(id, cart);
 						if(rows > 0) {
 							System.out.println("\n" + rows + "개 상품이 장바구니에 추가되었습니다.");
+						} else {
+						    System.out.println("장바구니 추가 실패.");
 						}
-						break;
 					}
 					break;
 					
@@ -120,8 +124,9 @@ public class ProductMenuService extends ConsoleShow {
 						rows = cartDAO.insertCart(id, cart);
 						if(rows > 0) {
 							System.out.println("\n" + rows + "개 상품이 장바구니에 추가되었습니다.");
+						} else {
+						    System.out.println("장바구니 추가 실패.");
 						}
-						break;
 					}
 					break;
 					
@@ -139,8 +144,9 @@ public class ProductMenuService extends ConsoleShow {
 						rows = cartDAO.insertCart(id, cart);
 						if(rows > 0) {
 							System.out.println("\n" + rows + "개 상품이 장바구니에 추가되었습니다.");
+						} else {
+						    System.out.println("장바구니 추가 실패.");
 						}
-						break;
 					}
 					break;
 					

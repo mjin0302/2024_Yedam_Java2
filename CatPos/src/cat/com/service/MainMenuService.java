@@ -24,22 +24,24 @@ public class MainMenuService extends ConsoleShow {
 			switch(menu) {
 			
 			case 1:	// 상품목록
+				ProductMenuService proService = new ProductMenuService();	// 상품조회
 				proService.productMenu(mem.getId(), mem.getName());
 				
 				//stop = false;
 				break;
 			
 			case 2:	// 장바구니
+				CartMenuService cartService = new CartMenuService();		// 장바구니
 				cartService.cartMenu(mem);
 				break;
 				
 			case 3:	// 주문목록
-				
+				orderAllList(mem.getId());
 				break;
 				
 			case 4:	// 관리자
-				if(mem.getRole().equalsIgnoreCase("admin") || mem.getRole().equalsIgnoreCase("staff")) {
-					
+				if(mem.getRole().equalsIgnoreCase("Owner") || mem.getRole().equalsIgnoreCase("Staff")) {
+					AdminMenuService adminService = new AdminMenuService();	// 관리자
 					adminService.adminMenu(mem);
 				} else {
 					System.out.println("접근 권한이 없습니다.");

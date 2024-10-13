@@ -1,24 +1,37 @@
 package cat.com.vo;
 
-import java.util.Date;
-
 public class OrderSheet {
 
 	// field
 	// 주문서 헤더
-	private String orderCode;
-	private String id;
-	private Date orderDate;
-	private int totalPrice;
+	private String orderCode; 		// 주문서 헤더 코드
+	private String id; 				// 주문자 id
+	private String orderDate; 		// 주문 일시
+	private int totalPrice; 		// 총 가격
 
 	// 주문서 디테일
-	private String orderDetailCode;
-	private String productCode;
-	private int quantity;
-	private int orderPrice;
+	private String orderDetailCode; // 주문서 상세 코드
+	private String productCode; 	// 상품 코드
+	private int quantity; 			// 상품 주문 수량
+	private int orderPrice;			// 상품 당 합계 가격(상품 수량 * 개당 가격)
+
+	// 상품
+	private String name; 			// 상품명
+	private int price; 				// 상품 개당 가격
+	
+	private int stock;
+
+	public int getStock() {
+		return stock;
+	}
+
+	public void setStock(int stock) {
+		this.stock = stock;
+	}
 
 	// constructor
-	public OrderSheet() {}
+	public OrderSheet() {
+	}
 
 	// method
 	public String getOrderCode() {
@@ -37,11 +50,11 @@ public class OrderSheet {
 		this.id = id;
 	}
 
-	public Date getOrderDate() {
+	public String getOrderDate() {
 		return orderDate;
 	}
 
-	public void setOrderDate(Date orderDate) {
+	public void setOrderDate(String orderDate) {
 		this.orderDate = orderDate;
 	}
 
@@ -85,10 +98,26 @@ public class OrderSheet {
 		this.orderPrice = orderPrice;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+	
 	@Override
 	public String toString() {
-		return "OrderSheet [orderCode=" + orderCode + ", id=" + id + ", orderDate=" + orderDate + ", totalPrice=" + totalPrice
-				+ ", orderDetailCode=" + orderDetailCode + ", productCode=" + productCode + ", quantity=" + quantity
-				+ ", orderPrice=" + orderPrice + ", toString()=" + super.toString() + "]";
+		return "OrderSheet [orderCode=" + orderCode + ", id=" + id + ", orderDate=" + orderDate + ", totalPrice="
+				+ totalPrice + ", orderDetailCode=" + orderDetailCode + ", productCode=" + productCode + ", quantity="
+				+ quantity + ", orderPrice=" + orderPrice + ", toString()=" + super.toString() + "]";
 	}
 }

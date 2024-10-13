@@ -9,7 +9,7 @@ public class AdminMenuService extends ConsoleShow {
 	public void adminMenu(Member mem) {
 		
 		while(stop) {
-			System.out.println("😀" + mem.getName() + "관리자님 메뉴를 선택하세요. 😀");
+			System.out.println("😀" + mem.getName() + " 관리자님 메뉴를 선택하세요. 😀");
 			System.out.println("--------------------------------------------------------------------------------");
 			System.out.println("       1. 상품관리  |  2. 매출조회  |  3. 뒤로가기  |  4. 종료");       
 			System.out.println("--------------------------------------------------------------------------------");
@@ -29,7 +29,14 @@ public class AdminMenuService extends ConsoleShow {
 					break;
 					
 				case 2 :
-					
+					// owner만 매출조회가능
+					if (mem.getRole().equalsIgnoreCase("owner")) {
+						SalesService salesService = new SalesService();
+						salesService.salesMenu(mem);
+						break;
+					} else {
+						System.out.println("접근 권한이 없습니다. ");
+					}
 					break;
 					
 				case 3 : return;

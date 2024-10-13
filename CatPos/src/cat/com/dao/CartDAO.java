@@ -56,14 +56,16 @@ public class CartDAO extends DAO {
 		    +			 "p.price "			// 상품 가격
 		    + "FROM       cart c "			
 		    + "INNER JOIN product p "
-		    + "ON         c.product_code = p.product_code ";
+		    + "ON         c.product_code = p.product_code "
+		    + "WHERE	  UPPER(c.id) = UPPER(?) ";
 		
 		List<Cart> list = new ArrayList<Cart>();
 		connect();
 		
 		try {
-			
 			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, mem.getId());
 			
 			rs = pstmt.executeQuery();
 			while(rs.next()) {

@@ -16,7 +16,7 @@ public class LoginService extends ConsoleShow {
 	
 	boolean stop;
 	
-	Member mem = null;
+	Member mem = new Member();
 	LoginDAO login = new LoginDAO();
 	
 	// 하나 이상의 대문자, 숫자, 특수문자를 입력하세요
@@ -41,7 +41,9 @@ public class LoginService extends ConsoleShow {
 		System.out.print("아이디 입력 > ");
 		id = sc.nextLine();
 		
-		System.out.print("비밀번호 입력 > ");
+		
+		
+		System.out.print("\n비밀번호 입력 > ");
 		pass = sc.nextLine();
 		
 		mem = login.loginChk(id, pass);
@@ -51,11 +53,18 @@ public class LoginService extends ConsoleShow {
 	} // End of loginService()
 	
 	public int signInService() {
-		System.out.print("아이디를 입력하세요 > ");
-		id = sc.nextLine();
 		
-		while(true) {
-			System.out.println("대문자, 숫자, 특수문자 포함 8자리 이상! 단, 특수문자는 !@#$%^&*()-+=] 만 해당");
+		while(true) { // 아이디 중복 체크
+			System.out.print("아이디를 입력하세요 > ");
+			id = sc.nextLine();
+			
+			String result = login.idChk(id);
+			if(result == null) break;
+			else System.out.println("\n중복된 아이디 입니다. 다시 입력하세요");
+		}
+		
+		while(true) {	// 비밀번호 정규식 체크
+			System.out.println("\n대문자, 숫자, 특수문자 포함 8자리 이상! 단, 특수문자는 !@#$%^&*()-+=] 만 해당");
 			System.out.print("비밀번호를 입력하세요 > ");
 			pass = sc.nextLine();
 			
@@ -73,6 +82,6 @@ public class LoginService extends ConsoleShow {
 		int cnt = login.signIn(new Member(id, pass, name, phone));
 		
 		return cnt;
-	}
+	} // signInService
 	
 } // End of Class LoginService

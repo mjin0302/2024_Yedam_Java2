@@ -1,15 +1,11 @@
 package cat.com;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import cat.com.dao.CartDAO;
 import cat.com.dao.OrderDAO;
-import cat.com.dao.ProductDAO;
-import cat.com.service.AdminMenuService;
-import cat.com.service.CartMenuService;
-import cat.com.service.ProductMenuService;
 import cat.com.vo.Cart;
 import cat.com.vo.OrderSheet;
 import cat.com.vo.Product;
@@ -22,20 +18,6 @@ public class ConsoleShow{
 	public static boolean stop = true;
 	public static int rows = 0;
 	public static String answer = null;
-	
-	public static ProductMenuService proService = new ProductMenuService();	// 상품조회
-	public static CartMenuService cartService = new CartMenuService();		// 장바구니
-	public static AdminMenuService adminService = new AdminMenuService();	// 관리자
-	
-	public static List<Cart> cList = new ArrayList<>();
-	public static List<Product> list = new ArrayList<>();	
-	public static List<OrderSheet> orderList = new ArrayList<>();
-	
-	public static Cart cart = new Cart();
-	
-	public static ProductDAO dao = new ProductDAO();	// 상품
-	public static CartDAO cartDAO = new CartDAO();		// 장바구니
-	public static OrderDAO oDao = new OrderDAO(); 		// 주문서
 	
 	public void consoleShow() {
 		
@@ -69,7 +51,7 @@ public class ConsoleShow{
 	} // End of firstMenuShow()
 	
 	public void cartAllListPrint(List<Cart> list) {
-		if(list.size() >= 1) {
+		if(list.size() > 0) {
 			System.out.println("-------------------------------------------------------");
 			System.out.println("\t\t     장바구니 목록");
 			System.out.println("-------------------------------------------------------");
@@ -95,6 +77,70 @@ public class ConsoleShow{
 		System.out.println();
 		
 	}
+	
+	public void orderAllList(String id) {
+			
+		OrderDAO odao = new OrderDAO();
+		List<OrderSheet> list = new ArrayList<OrderSheet>();
+		list = odao.selectAllOrderSheet(id);
+		
+		if(list != null) {
+			System.out.println("-------------------------------------------------------------------------------------");
+			System.out.println("\t\t\t     주문 목록");
+			System.out.println("-------------------------------------------------------------------------------------");
+			System.out.println("상품코드\t 상품이름\t\t\t 수량\t 합계\t\t 주문일시");
+			System.out.println("=====================================================================================");
+			
+			for(OrderSheet order : list) {
+				System.out.printf("%s\t %s\t\t\t %d\t %s\t\t %s\n",order.getProductCode(), order.getName(), order.getQuantity(), NumberFormat.getInstance().format((order.getQuantity() * order.getPrice())), order.getOrderDate());
+			}
+		} else {
+			System.out.println("\n");
+			System.out.println(" ____ _____       ___  ___ ___  ____  ______  __ __ \n"
+					+ "|    / ___/      /  _]|   |   ||    \\|      ||  |  |\n"
+					+ " |  (   \\_      /  [_ | _   _ ||  o  )      ||  |  |\n"
+					+ " |  |\\__  |    |    _]|  \\_/  ||   _/|_|  |_||  ~  |\n"
+					+ " |  |/  \\ |    |   [_ |   |   ||  |    |  |  |___, |\n"
+					+ " |  |\\    |    |     ||   |   ||  |    |  |  |     |\n"
+					+ "|____|\\___|    |_____||___|___||__|    |__|  |____/ \n"
+					+ "                                                    ");
+			System.out.println("\n");
+		}
+		System.out.println();
+		
+	}
+	
+	public void sales(int price) {
+		System.out.println("-------------------------------------------------------------------------------------");
+		System.out.println("\t\t\t전체 총 매출 = " + NumberFormat.getInstance().format(price) + "원 입니다.");
+		System.out.println("-------------------------------------------------------------------------------------");
+	}
+	
+	public void salesByProduct(List<OrderSheet> list) {
+		if(list != null) {
+			System.out.println("-------------------------------------------------------------------------------------");
+			System.out.println("\t\t\t     상품별 매출조회");
+			System.out.println("-------------------------------------------------------------------------------------");
+			System.out.println("상품코드\t 상품이름\t\t\t 수량\t\t 합계");
+			System.out.println("=====================================================================================");
+			
+			for(OrderSheet order : list) {
+				System.out.printf("%s\t %s\t\t\t %d\t\t %s\n",order.getProductCode(), order.getName(),order.getQuantity(), NumberFormat.getInstance().format(order.getOrderPrice()));
+			}
+		} else {
+			System.out.println("\n");
+			System.out.println(" ____ _____       ___  ___ ___  ____  ______  __ __ \n"
+					+ "|    / ___/      /  _]|   |   ||    \\|      ||  |  |\n"
+					+ " |  (   \\_      /  [_ | _   _ ||  o  )      ||  |  |\n"
+					+ " |  |\\__  |    |    _]|  \\_/  ||   _/|_|  |_||  ~  |\n"
+					+ " |  |/  \\ |    |   [_ |   |   ||  |    |  |  |___, |\n"
+					+ " |  |\\    |    |     ||   |   ||  |    |  |  |     |\n"
+					+ "|____|\\___|    |_____||___|___||__|    |__|  |____/ \n"
+					+ "                                                    ");
+			System.out.println("\n");
+		}
+	}
+	
 	
 	public void programEnd() {
 		System.out.println(

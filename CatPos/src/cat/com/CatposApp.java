@@ -55,7 +55,7 @@ public class CatposApp {
 				break;
 
 			case 2:
-				System.out.print("회원 가입");
+				System.out.println("\n회원 가입을 진행합니다. ");
 				
 				// 회원가입
 				int cnt = service.signInService();
