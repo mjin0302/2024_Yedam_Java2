@@ -5,14 +5,14 @@ import cat.com.vo.Member;
 
 public class MainMenuService extends ConsoleShow {
 	
-	public void mainMenu(Member mem) {
+	public boolean mainMenu(Member mem) {
 		
 		while(stop) {
 			System.out.println("--------------------------------------------------------------------------------");
 			System.out.println("   1. 상품목록  |  2. 장바구니  |  3. 주문목록  |  4. 관리자  |  5. 뒤로가기  |  6. 종료");
 			System.out.println("--------------------------------------------------------------------------------");
 			
-			System.out.print("메뉴선택 > ");
+			System.out.print("메뉴선택 ▷ ");
 			try {
 	            menu = Integer.parseInt(sc.nextLine());
 	        } catch (NumberFormatException e) {
@@ -25,14 +25,18 @@ public class MainMenuService extends ConsoleShow {
 			
 			case 1:	// 상품목록
 				ProductMenuService proService = new ProductMenuService();	// 상품조회
-				proService.productMenu(mem.getId(), mem.getName());
+				stop = proService.productMenu(mem.getId(), mem.getName());
+
+				if(stop == false) return false;
 				
-				//stop = false;
 				break;
 			
 			case 2:	// 장바구니
 				CartMenuService cartService = new CartMenuService();		// 장바구니
-				cartService.cartMenu(mem);
+				stop = cartService.cartMenu(mem);
+				
+				if(stop == false) return false;
+				
 				break;
 				
 			case 3:	// 주문목록
@@ -42,7 +46,9 @@ public class MainMenuService extends ConsoleShow {
 			case 4:	// 관리자
 				if(mem.getRole().equalsIgnoreCase("Owner") || mem.getRole().equalsIgnoreCase("Staff")) {
 					AdminMenuService adminService = new AdminMenuService();	// 관리자
-					adminService.adminMenu(mem);
+					stop = adminService.adminMenu(mem);
+					
+					if(stop == false) return false;
 				} else {
 					System.out.println("접근 권한이 없습니다.");
 					continue;
@@ -50,12 +56,13 @@ public class MainMenuService extends ConsoleShow {
 				break;
 			
 			case 5:	// 뒤로가기 
-				return;
-				
-			case 6 :	// 프로그램 종료
-				programEnd();
 				stop = false;
 				break;
+				
+			case 6 :	// 프로그램 종료
+				ConsoleShow show = new ConsoleShow();
+				show.programEnd();
+				return false;
 				
 			default : 
 				System.out.println("\n선택한 메뉴는 존재하지 않습니다. 다시 선택 하세요.");
@@ -64,7 +71,7 @@ public class MainMenuService extends ConsoleShow {
 			} // End Switch
 			
 		} // End While
-		
+		return true;
 	} // End of mainMenu()
 	
 }// End of Class

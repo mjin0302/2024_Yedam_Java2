@@ -12,24 +12,34 @@ public class OrderDAO extends DAO {
 	
 	public List<OrderSheet> selectAllOrderSheet(String id) {
 		
-		sql = "SELECT     od.product_code as product_code, "	// 상품코드
-			+ "           od.quantity as quantity, "			// 주문 수량
-			+ "           od.order_price as order_price, "		// 주문가격
-			+ "           oh.id as id, "						// 주문자 id	
-			+ "           TO_CHAR(oh.order_date, 'YYYY-MM-DD HH24:MI:SS') as order_date, "		// 주문일시
-			+ "           oh.total_price as total_price, "		// 주문 총 합계
-			+ "           od.order_code as order_code, "		// 주문헤더 코드
-			+ "           p.name as name, "						// 상품명
-			+ "           p.price as price, "					// 상품 개당가격
-			+ "           NVL(s.input, 0) - NVL(s.output, 0) as stock "	// 재고
-			+ "FROM       order_head oh "
-			+ "RIGHT JOIN order_detail od "
-			+ "ON         oh.order_code = od.order_code "
-			+ "INNER JOIN product p "
-			+ "ON         od.product_code = p.product_code "
-			+ "RIGHT JOIN stock_in_out s "
-			+ "ON         p.product_code = s.product_code "
-			+ "WHERE      UPPER(oh.id) = UPPER(?)";
+		sql = "SELECT     od.product_code , 	-- 상품코드\r\n"
+			+ "           od.quantity , 			-- 주문 수량\r\n"
+			+ "           od.order_price , 		-- 주문가격\r\n"
+			+ "           oh.id , 						-- 주문자 id	\r\n"
+			+ "           TO_CHAR(oh.order_date, 'YYYY-MM-DD HH24:MI:SS') as order_date, 		-- 주문일시\r\n"
+			+ "           oh.total_price , 		-- 주문 총 합계\r\n"
+			+ "           od.order_code , 		-- 주문헤더 코드\r\n"
+			+ "           p.name , 						-- 상품명\r\n"
+			+ "           p.price, 					-- 상품 개당가격\r\n"
+			+ "           SUM(NVL(s.input, 0) - NVL(s.output, 0)) as stock 	-- 재고\r\n"
+			+ "FROM       order_head oh \r\n"
+			+ "RIGHT JOIN order_detail od \r\n"
+			+ "ON         oh.order_code = od.order_code \r\n"
+			+ "INNER JOIN product p \r\n"
+			+ "ON         od.product_code = p.product_code \r\n"
+			+ "RIGHT JOIN stock_in_out s \r\n"
+			+ "ON         p.product_code = s.product_code \r\n"
+			+ "WHERE      UPPER(oh.id) = UPPER(?)\r\n"
+			+ "GROUP BY   od.product_code, 	-- 상품코드\r\n"
+			+ "           od.quantity, 			-- 주문 수량\r\n"
+			+ "           od.order_price, 		-- 주문가격\r\n"
+			+ "           oh.id, 						-- 주문자 id	\r\n"
+			+ "           oh.order_date, 		-- 주문일시\r\n"
+			+ "           oh.total_price, 		-- 주문 총 합계\r\n"
+			+ "           od.order_code, 		-- 주문헤더 코드\r\n"
+			+ "           p.name, 						-- 상품명\r\n"
+			+ "           p.price					-- 상품 개당가격\r\n"
+			+ "ORDER BY   oh.order_date DESC";
 		
 		List<OrderSheet> list = new ArrayList<>();
 		connect();
@@ -85,7 +95,7 @@ public class OrderDAO extends DAO {
 		
 		disconnect();
 		return null;
-	}
+	} // End of selectAllOrderSheet
 	
 	public int deleteCartList(Connection connect, String id, List<String> codes) throws SQLException {
 		
@@ -96,13 +106,11 @@ public class OrderDAO extends DAO {
 			+ "AND         UPPER(id) = UPPER(?)";
 		
 		try {
-			System.out.println("connect = " + connect + "id = " + id + "codes = " + codes);
 			for (String code : codes) {
 	        	
 				pstmt = connect.prepareStatement(sql);
 				
 	            pstmt.setString(1, code); 
-	            System.out.println(code);
 	            pstmt.setString(2, id);
 	            
 	            rows += pstmt.executeUpdate();
@@ -118,7 +126,7 @@ public class OrderDAO extends DAO {
 		
 		return 0;
 		
-	}
+	} // End of deleteCartList
 
 	
 	public String insertOrderHead(Connection connect, String id, int total) throws SQLException {
@@ -143,7 +151,6 @@ public class OrderDAO extends DAO {
 
 	            pstmt.executeUpdate();
 
-	            System.out.println("insertOrderHead orderCode = " + orderCode);
 	            return orderCode;  // 삽입된 order_code 반환
 	            
 	        }
@@ -153,7 +160,7 @@ public class OrderDAO extends DAO {
 	    }
 
 	    return null;
-	}
+	} // End of insertOrderHead
 	
 	public int insertOrderDetail(Connection connect, String headCode, List<Cart> list) throws SQLException {
 		
@@ -187,7 +194,7 @@ public class OrderDAO extends DAO {
 		}
 		
 		return 0;
-	}
+	} // End of insertOrderDetail
 	
 	public int stockOutInsert(Connection connect, List<Cart> list) {
 		
@@ -226,24 +233,20 @@ public class OrderDAO extends DAO {
 	        
 	        // 1. 장바구니 삭제
 	        int deleteRow = deleteCartList(connect, id, codes);
-	        System.out.println("deleteRow = " + deleteRow);
 	        
 	        // 2. 주문 헤더 생성
 	        String orderCode = insertOrderHead(connect, id, total);
-	        System.out.println("orderCode = " + orderCode);
 	        
 	        // 3. 주문 상세 내역 추가
 	        int insertRow = 0;
 	        if(orderCode != null) {
 	        	insertRow = insertOrderDetail(connect, orderCode, cart);
-	        	System.out.println("insertRow = " + insertRow);
 	        } else {
 	        	System.out.println("주문코드 생성 실패");
 	        }
 	        
 	        // 4. 재고 출고 처리
 	        int stockRow = stockOutInsert(connect, cart);
-	        System.out.println("stockRow = " + stockRow);
 	        
 	        // 모든 작업 성공 시 커밋
 	        if(deleteRow > 0 && orderCode != null && insertRow > 0 && stockRow > 0) {
@@ -274,7 +277,5 @@ public class OrderDAO extends DAO {
 	        disconnect();
 	    }
 	}
-
-	
 
 }

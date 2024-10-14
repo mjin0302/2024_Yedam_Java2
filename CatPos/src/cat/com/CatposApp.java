@@ -29,7 +29,7 @@ public class CatposApp {
 			System.out.println("                       1. 로그인  |  2. 회원가입  |  3. 종료");
 			System.out.println("--------------------------------------------------------------------------------");
 
-			System.out.print("메뉴선택 > ");
+			System.out.print("메뉴선택 ▷ ");
 			try {
 	            menu = Integer.parseInt(sc.nextLine());
 	        } catch (NumberFormatException e) {
@@ -46,7 +46,7 @@ public class CatposApp {
 					System.out.println("😀 " + mem.getName() + "님 반갑습니다. 😀");
 					
 					MainMenuService main = new MainMenuService();
-					main.mainMenu(mem);
+					stop = main.mainMenu(mem);
 					
 					break;
 				}
@@ -58,10 +58,10 @@ public class CatposApp {
 				System.out.println("\n회원 가입을 진행합니다. ");
 				
 				// 회원가입
-				int cnt = service.signInService();
+				String name = service.signInService();
 				
-				if(cnt > 0) {
-					System.out.println("회원가입이 완료되었습니다.");
+				if(name != null) {
+					System.out.println("\n" + name + "님 회원가입이 완료되었습니다.");
 					System.out.println("가입하신 아이디를 사용하실려면 로그인을 해주세요.");
 					break;
 				}
@@ -80,7 +80,7 @@ public class CatposApp {
 				break;
 			}
 			
-		} // End of 로그인 체크
+		} // End of while
 		
 		sc.close();
 	} // End of Main

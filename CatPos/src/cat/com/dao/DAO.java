@@ -15,8 +15,8 @@ public class DAO {
 	String sql = null;
 	int rows = 0;
 
-	String url = "jdbc:oracle:thin:@43.202.63.165:1521:xe";
-//	String url = "jdbc:oracle:thin:@localhost:1521:xe";
+//	String url = "jdbc:oracle:thin:@43.202.63.165:1521:xe";
+	String url = "jdbc:oracle:thin:@192.168.0.18:1521:xe";
 	String user = "catpos";
 	String pass = "catpos";
 

@@ -14,7 +14,7 @@ public class CartDAO extends DAO {
 		sql = "MERGE "
 			+ 	"INTO  CART c "
 			+ "USING dual "
-			+ 	"ON    (c.product_code = ?) "
+			+ 	"ON    (c.product_code = ? AND c.id = ?) "
 			+ "WHEN MATCHED THEN "
 			+ 	"UPDATE "
 			+ 	"SET c.quantity = c.quantity + TO_NUMBER( ? ) " 
@@ -28,10 +28,11 @@ public class CartDAO extends DAO {
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setString(1, cart.getProductId());
-			pstmt.setInt(2, cart.getQuantity());
-			pstmt.setString(3, id);
-			pstmt.setString(4, cart.getProductId());
-			pstmt.setInt(5, cart.getQuantity());
+			pstmt.setString(2, id);
+			pstmt.setInt(3, cart.getQuantity());
+			pstmt.setString(4, id);
+			pstmt.setString(5, cart.getProductId());
+			pstmt.setInt(6, cart.getQuantity());
 			
 			rows = pstmt.executeUpdate(); 
 			
@@ -57,7 +58,8 @@ public class CartDAO extends DAO {
 		    + "FROM       cart c "			
 		    + "INNER JOIN product p "
 		    + "ON         c.product_code = p.product_code "
-		    + "WHERE	  UPPER(c.id) = UPPER(?) ";
+		    + "WHERE	  UPPER(c.id) = UPPER(?) "
+		    + "ORDER BY   TO_NUMBER(c.product_code) ";
 		
 		List<Cart> list = new ArrayList<Cart>();
 		connect();

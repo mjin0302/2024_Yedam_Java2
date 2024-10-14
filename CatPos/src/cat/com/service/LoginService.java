@@ -38,12 +38,10 @@ public class LoginService extends ConsoleShow {
     // 로그인
 	public Member login() {
 		// TODO 아이디 중복체크하기
-		System.out.print("아이디 입력 > ");
+		System.out.print("아이디 입력 ▷ ");
 		id = sc.nextLine();
 		
-		
-		
-		System.out.print("\n비밀번호 입력 > ");
+		System.out.print("\n비밀번호 입력 ▷ ");
 		pass = sc.nextLine();
 		
 		mem = login.loginChk(id, pass);
@@ -52,36 +50,42 @@ public class LoginService extends ConsoleShow {
 		
 	} // End of loginService()
 	
-	public int signInService() {
+	boolean run = true;
+	
+	public String signInService() {
 		
-		while(true) { // 아이디 중복 체크
-			System.out.print("아이디를 입력하세요 > ");
+		while(run) { // 아이디 중복 체크
+			System.out.print("아이디를 입력하세요 ▷ ");
 			id = sc.nextLine();
 			
 			String result = login.idChk(id);
-			if(result == null) break;
-			else System.out.println("\n중복된 아이디 입니다. 다시 입력하세요");
+			if(result == null) {
+				run = false; 
+			} else System.out.println("\n중복된 아이디 입니다. 다시 입력하세요");
 		}
 		
-		while(true) {	// 비밀번호 정규식 체크
+		run = true;
+		while(run) {	// 비밀번호 정규식 체크
 			System.out.println("\n대문자, 숫자, 특수문자 포함 8자리 이상! 단, 특수문자는 !@#$%^&*()-+=] 만 해당");
-			System.out.print("비밀번호를 입력하세요 > ");
+			System.out.print("비밀번호를 입력하세요 ▷ ");
 			pass = sc.nextLine();
 			
 			// 비밀번호 정규식 체크
 			boolean passBoo = isValid(pass);
-			if(passBoo == true) break;
+			if(passBoo == true) run = false;
 		}
 		
-		System.out.print("이름을 입력하세요 > ");
+		System.out.print("\n이름을 입력하세요 ▷ ");
 		name = sc.nextLine();
 		
-		System.out.print("폰번호를 입력하세요 > ");
+		System.out.print("\n폰번호를 입력하세요 ▷ ");
 		phone = sc.nextLine();
 		
 		int cnt = login.signIn(new Member(id, pass, name, phone));
-		
-		return cnt;
+		if(cnt > 0) {
+			return name;
+		}
+		return null;
 	} // signInService
-	
+
 } // End of Class LoginService

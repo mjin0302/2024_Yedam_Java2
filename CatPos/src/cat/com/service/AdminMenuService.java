@@ -6,7 +6,7 @@ import cat.com.vo.Member;
 public class AdminMenuService extends ConsoleShow {
 
 	// method
-	public void adminMenu(Member mem) {
+	public boolean adminMenu(Member mem) {
 		
 		while(stop) {
 			System.out.println("😀" + mem.getName() + " 관리자님 메뉴를 선택하세요. 😀");
@@ -14,7 +14,7 @@ public class AdminMenuService extends ConsoleShow {
 			System.out.println("       1. 상품관리  |  2. 매출조회  |  3. 뒤로가기  |  4. 종료");       
 			System.out.println("--------------------------------------------------------------------------------");
 			
-			System.out.print("메뉴선택 > ");
+			System.out.print("메뉴선택 ▷ ");
 			try {
 	            menu = Integer.parseInt(sc.nextLine());
 	        } catch (NumberFormatException e) {
@@ -25,7 +25,7 @@ public class AdminMenuService extends ConsoleShow {
 			
 			switch(menu) {
 				case 1 :
-					
+					System.out.println("상품관리 페이지입니다. ");
 					break;
 					
 				case 2 :
@@ -39,12 +39,14 @@ public class AdminMenuService extends ConsoleShow {
 					}
 					break;
 					
-				case 3 : return;
-					
-				case 4 :
-					programEnd();
+				case 3 : 
 					stop = false;
 					break;
+					
+				case 4 :
+					ConsoleShow show = new ConsoleShow();
+					show.programEnd();
+					return stop = false;
 					
 				default : 
 					System.out.println("선택한 메뉴는 존재하지 않습니다. 다시 선택 하세요.");
@@ -53,7 +55,7 @@ public class AdminMenuService extends ConsoleShow {
 			} // End of switch
 			
 		} // End of While
-		
+		return true;
 	} // End of adminMenu()
 	
 } // End of Class AdminMenuService()

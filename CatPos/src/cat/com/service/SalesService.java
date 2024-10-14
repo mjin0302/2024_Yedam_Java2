@@ -14,7 +14,7 @@ public class SalesService extends ConsoleShow {
 			System.out.println("         1. 총 매출 조회  |  2. 상품별 매출 조회  |  3. 뒤로가기  |  4. 종료");
 			System.out.println("--------------------------------------------------------------------------------");
 
-			System.out.print("메뉴선택 > ");
+			System.out.print("메뉴선택 ▷ ");
 			try {
 				menu = Integer.parseInt(sc.nextLine());
 			} catch (NumberFormatException e) {
